@@ -1,6 +1,7 @@
 # node-native-extension-in-swift
 
-An experimental repo for [Node.js native addons](https://nodejs.org/api/addons.html) that written in Swift.
+An experimental repo for [Node.js native addons](https://nodejs.org/api/addons.html) that written in Swift.  
+The first motivation of implementeing this was reduceing overhead of execution between Node.js and Swift on the Serverless environment.
 
 ## Usage
 
