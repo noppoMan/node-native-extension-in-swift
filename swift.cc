@@ -7,7 +7,22 @@ using std::cerr;
 using std::endl;
 using std::string;
 
-const auto SWIFT_DYLIB_PATH = "./NativeExtensionInSwift/.build/debug/libNativeExtensionInSwift.dylib";
+#ifdef __APPLE__
+#define IS_SUPPORTED_PLATFORM true
+const string SHARED_LIBRARY_EXT = "dylib";
+#endif
+
+#ifdef __linux__
+#define IS_SUPPORTED_PLATFORM true
+const string SHARED_LIBRARY_EXT = "so";
+#endif
+
+#if !defined IS_SUPPORTED_PLATFORM
+  cerr << "Unsupported Platform";
+  exit(EXIT_FAILURE);
+#endif
+
+const string SWIFT_SHARED_LIBRARY_PATH = "./NativeExtensionInSwift/.build/debug/libNativeExtensionInSwift."+SHARED_LIBRARY_EXT;
 
 // Symbol name will be changed.
 // Got by nm -gU ./NativeExtensionInSwift/.build/debug/libNativeExtensionInSwift.dylib
@@ -48,7 +63,7 @@ void Fibonacci(const Nan::FunctionCallbackInfo<v8::Value>& info) {
     return;
   }
 
-  const auto swiftLib = DLOpenOrDie(SWIFT_DYLIB_PATH);
+  const auto swiftLib = DLOpenOrDie(SWIFT_SHARED_LIBRARY_PATH);
   const auto _Fibonacci = (FibonacciFunc)DLSymOrDie(swiftLib, SWIFT_FIBONACCI_FUNC_SYMBOL);
 
   double arg0 = info[0]->NumberValue();
@@ -57,7 +72,7 @@ void Fibonacci(const Nan::FunctionCallbackInfo<v8::Value>& info) {
 }
 
 void PrintHello(const Nan::FunctionCallbackInfo<v8::Value>& info) {
-  const auto swiftLib = DLOpenOrDie(SWIFT_DYLIB_PATH);
+  const auto swiftLib = DLOpenOrDie(SWIFT_SHARED_LIBRARY_PATH);
   const auto _PrintHello = (PrintHelloFunc)DLSymOrDie(swiftLib, SWIFT_PRINT_HELLO_FUNC_SYMBOL);
   _PrintHello();
 }

@@ -3,9 +3,18 @@
 An experimental repo for [Node.js native addons](https://nodejs.org/api/addons.html) that written in Swift.  
 The first motivation of implementeing this was reduceing overhead of execution between Node.js and Swift on the Serverless environment.
 
-## Usage
+# Usage
 
+## Linux
+
+```sh
+$ docker build -t node-native-extension-in-swift .
+$ docker run -t node-native-extension-in-swift
 ```
+
+## Mac
+
+```sh
 $ git clone https://github.com/noppoMan/node-native-extension-in-swift.git
 $ cd node-native-extension-in-swift
 $ swift build --package-path NativeExtensionInSwift
