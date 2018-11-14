@@ -24,10 +24,8 @@ const string SHARED_LIBRARY_EXT = "so";
 
 const string SWIFT_SHARED_LIBRARY_PATH = "./NativeExtensionInSwift/.build/debug/libNativeExtensionInSwift."+SHARED_LIBRARY_EXT;
 
-// Symbol name will be changed.
-// Got by nm -gU ./NativeExtensionInSwift/.build/debug/libNativeExtensionInSwift.dylib
-const auto SWIFT_FIBONACCI_FUNC_SYMBOL = "_T022NativeExtensionInSwiftAAV9fibonaccis5Int32VAEF";
-const auto SWIFT_PRINT_HELLO_FUNC_SYMBOL = "_T022NativeExtensionInSwiftAAV10printHelloyyF";
+const auto SWIFT_FIBONACCI_FUNC_SYMBOL = "swift_fibonacci";
+const auto SWIFT_PRINT_HELLO_FUNC_SYMBOL = "swift_print_hello";
 
 typedef int (*FibonacciFunc)(int);
 typedef void (*PrintHelloFunc)();
