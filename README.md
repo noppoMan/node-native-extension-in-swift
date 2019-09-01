@@ -5,7 +5,35 @@
 An experimental repo for [Node.js native addons](https://nodejs.org/api/addons.html) that written in Swift.  
 The first motivation of implementeing this was reduceing overhead of execution between Node.js and Swift on the Serverless environment.
 
-# Usage
+## Writing native extensions with Swift
+
+1. Define function(s) in a format that can be exported to C/C++ in Swift side.
+
+```swift
+@_cdecl("swift_fibonacci") // Name the function symbol.
+public func fibonacci(_ n: CInt) -> CInt {
+    if n == 0 {
+        return 0
+    } else if n == 1{
+        return 1
+    }
+    return fibonacci(n - 1) + fibonacci(n - 2)
+}
+```
+
+2. [Register fibonacci as callable function in Node.js (V8 side)](https://github.com/noppoMan/node-native-extension-in-swift/blob/master/swift.cc#L53)
+
+3. The exported functions can be imported and executed in Node.js side.
+
+```js
+const swift = require('bindings')('swift');
+
+const result = swift.fibonacci(10);
+console.log(result);
+```
+
+
+## Running Example
 
 ## Linux
 
